@@ -1,6 +1,10 @@
 <dependencies>
   <androidPackages>
-    <androidPackage spec="com.farsitel.bazaar:auth:1.0.0-alpha10"/>
+    <androidPackage spec="com.github.cafebazaar.CafeBazaarAuth:auth:1.0.0-alpha10">
+      <repositories>
+        <repository>https://jitpack.io</repository>
+      </repositories>
+    </androidPackage>
     <androidPackage spec="androidx.lifecycle:lifecycle-extensions:2.2.0"/>
     <androidPackage spec="androidx.appcompat:appcompat:1.0.2"/>
     <androidPackage spec="com.google.android.material:material:1.0.0"/>
