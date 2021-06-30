@@ -39,7 +39,7 @@ namespace CafeBazaar.Games
                                 {
                                     if (storage_result.Status == InitStorageStatus.Success)
                                     {
-                                        CafebazaarLoginUI.Instacne.Show();
+                                        CafebazaarLoginUI.Instance.Show();
                                         isAuthenticated = true;
                                         if (callback != null)
                                             callback(SignInStatus.Success);
@@ -54,7 +54,7 @@ namespace CafeBazaar.Games
                         }
                         else
                         {
-                            CafebazaarLoginUI.Instacne.Show();
+                            CafebazaarLoginUI.Instance.Show();
                             isAuthenticated = true;
                             if (callback != null)
                                 callback(SignInStatus.Success);

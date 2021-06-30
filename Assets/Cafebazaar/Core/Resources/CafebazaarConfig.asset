@@ -9,10 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61f25480949c147f8b87eaf055049ae8, type: 3}
+  m_Script: {fileID: 11500000, guid: b8d40beeb9ba7504b9e559b2f16f60a1, type: 3}
   m_Name: CafebazaarConfig
   m_EditorClassIdentifier: 
   ActiveSDK: 1
   InAppPurchase:
     RSA: 
-    Products: []
+    Products:
+    - ProductId: test
+      Price: 
+      Title: title
+      Description: 
+      Type: 0
+      Kind: 3
