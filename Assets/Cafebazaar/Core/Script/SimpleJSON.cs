@@ -52,7 +52,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CafeBazaar.Core.SimpleJSON
+namespace CafeBazaar.Core
 {
     public enum JSONBinaryTag
     {

@@ -7,7 +7,7 @@ namespace CafeBazaar.Core.UI
     {
         #region Singleton
         private static CafebazaarLoginUI pointer;
-        public static CafebazaarLoginUI Instacne
+        public static CafebazaarLoginUI Instance
         {
             get
             {
