@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using CafeBazaar.Storage;
 using CafeBazaar.Core;
-using CafeBazaar.AuthAndStorage;
-using CafeBazaar.Core.UI;
 using System;
 
 namespace CafeBazaar.AuthAndStorage
@@ -69,7 +67,7 @@ namespace CafeBazaar.AuthAndStorage
 #endif
             }
         }
-        
+
         #endregion
         #region LOGIN System
         public bool IsSignIn { get; private set; }
@@ -252,7 +250,6 @@ namespace CafeBazaar.AuthAndStorage
         {
             yield return true;
             yield return true;
-            CafebazaarLoginUI.Instance.Show();
             yield return new WaitForSecondsRealtime(1.4f);
 
             if (OnResult != null)
@@ -450,9 +447,8 @@ namespace CafeBazaar.AuthAndStorage
     public class SetStorageResult : CafeBaseResult
     {
         public SetStorageStatus Status { get; set; }
-        
     }
-    
+
     public class InitStorageResult : CafeBaseResult
     {
         public InitStorageStatus Status { get; set; }
