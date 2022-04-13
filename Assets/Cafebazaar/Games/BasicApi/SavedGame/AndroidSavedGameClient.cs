@@ -1,4 +1,5 @@
-﻿using CafeBazaar.AuthAndStorage;
+﻿using System.Threading.Tasks;
+using CafeBazaar.AuthAndStorage;
 
 namespace CafeBazaar.Games.BasicApi.SavedGame
 {
@@ -17,46 +18,46 @@ namespace CafeBazaar.Games.BasicApi.SavedGame
         {
             return AuthAndStorageBridge.Instance.Storage_HasKey(key);
         }
-        public float GetFloat(string key, float defaultValue)
+        public async Task<float> GetFloat(string key, float defaultValue)
         {
-            if (float.TryParse(GetString(key, defaultValue.ToString()), out float res))
+            if (float.TryParse(await GetString(key, defaultValue.ToString()), out float res))
                 return res;
             else
                 return defaultValue;
         }
-        public float GetFloat(string key)
+        public async Task<float> GetFloat(string key)
         {
-            return GetFloat(key, 0);
+            return await GetFloat(key, 0);
         }
-        public int GetInt(string key, int defaultValue)
+        public async Task<int> GetInt(string key, int defaultValue)
         {
-            if (int.TryParse(GetString(key, defaultValue.ToString()), out int res))
+            if (int.TryParse(await GetString(key, defaultValue.ToString()), out int res))
                 return res;
             else
                 return defaultValue;
         }
-        public int GetInt(string key)
+        public async Task<int> GetInt(string key)
         {
-            return GetInt(key, 0);
+            return await GetInt(key, 0);
         }
-        public string GetString(string key, string defaultValue)
+        public async Task<string> GetString(string key, string defaultValue)
         {
-            return AuthAndStorageBridge.Instance.Storage_GetKey(key, defaultValue);
+            return await AuthAndStorageBridge.Instance.Storage_GetKey(key, defaultValue);
         }
-        public string GetString(string key)
+        public async Task<string> GetString(string key)
         {
-            return GetString(key, null);
+            return await GetString(key, null);
         }
-        public bool GetBool(string key, bool defaultValue)
+        public async Task<bool> GetBool(string key, bool defaultValue)
         {
-            if (bool.TryParse(GetString(key, defaultValue.ToString()), out bool res))
+            if (bool.TryParse(await GetString(key, defaultValue.ToString()), out bool res))
                 return res;
             else
                 return defaultValue;
         }
-        public bool GetBool(string key)
+        public async Task<bool> GetBool(string key)
         {
-            return false;
+            return await GetBool(key, false);
         }
 
         public void SetFloat(string key, float value)
