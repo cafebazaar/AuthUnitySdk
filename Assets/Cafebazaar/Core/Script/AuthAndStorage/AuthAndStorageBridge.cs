@@ -209,6 +209,10 @@ namespace CafeBazaar.AuthAndStorage
         }
         public void OnGetDataSucceed(string data)
         {
+            if(data == "___no_data___"){
+                OnGetDataFailed("Storage has no data. \n Please login again.");
+                return;
+            }
             InitStorageResult initStorageResult = new InitStorageResult();
             initStorageResult.Status = InitStorageStatus.Success;
             Storage_LoadData(data);
