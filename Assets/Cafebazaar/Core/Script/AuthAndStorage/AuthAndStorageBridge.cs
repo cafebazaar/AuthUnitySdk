@@ -64,7 +64,7 @@ namespace CafeBazaar.AuthAndStorage
             {
 #if UNITY_ANDROID
                 using (AndroidJavaClass pluginClass = new AndroidJavaClass("com.farsitel.bazaar.BazaarBridge"))
-                    bazaarBridgePlugin = pluginClass.CallStatic<AndroidJavaObject>("instance");
+                    bazaarBridgePlugin = pluginClass.CallStatic<AndroidJavaObject>("instance", true);
 #endif
             }
         }
