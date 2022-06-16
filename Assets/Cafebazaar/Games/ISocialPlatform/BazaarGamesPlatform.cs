@@ -65,7 +65,7 @@ namespace CafeBazaar.Games
                 else
                 {
                     callback(false, "Authentication failed");
-                    Debug.Log("Authentication failed");
+                    Debug.Log("Authentication failed => " + status);
                 }
             });
         }

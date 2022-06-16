@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using CafeBazaar.AuthAndStorage;
 using CafeBazaar.Games.BasicApi;
 using CafeBazaar.Games.BasicApi.SavedGame;
 using CafeBazaar.Storage;
+using UnityEngine;
 
 namespace CafeBazaar.Games
 {
@@ -37,20 +38,19 @@ namespace CafeBazaar.Games
                             AuthAndStorageBridge.Instance.STORAGE_Init(
                                 (storage_result) =>
                                 {
+                                    Debug.Log("Login Status " + result.Status + " Storage status: " + storage_result.Status);
                                     if (callback != null)
                                         callback(SignInStatus.Success);
                                 });
                         }
                         else
                         {
-                            isAuthenticated = true;
                             if (callback != null)
                                 callback(SignInStatus.Success);
                         }
                     }
                     else
                     {
-                        isAuthenticated = false;
                         if (callback != null)
                             callback(SignInStatus.Failed);
                     }
