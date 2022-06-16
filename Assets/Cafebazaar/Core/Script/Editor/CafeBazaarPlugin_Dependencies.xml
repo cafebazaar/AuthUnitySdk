@@ -1,6 +1,6 @@
 <dependencies>
   <androidPackages>
-    <androidPackage spec="com.github.cafebazaar.CafeBazaarAuth:auth:1.0.0-alpha10">
+    <androidPackage spec="com.github.cafebazaar.CafeBazaarAuth:auth:1.0.2">
       <repositories>
         <repository>https://jitpack.io</repository>
       </repositories>
