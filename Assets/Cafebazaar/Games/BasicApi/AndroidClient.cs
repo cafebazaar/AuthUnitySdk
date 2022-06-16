@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CafeBazaar.AuthAndStorage;
 using CafeBazaar.Games.BasicApi;
 using CafeBazaar.Games.BasicApi.SavedGame;
@@ -26,7 +26,8 @@ namespace CafeBazaar.Games
             AuthAndStorageBridge.Instance.LOGIN_SignIn(silent,
                 (result) =>
                 {
-                    if (result.Status == CoreSignInStatus.Success)
+                    isAuthenticated = result.Status == CoreSignInStatus.Success;
+                    if (isAuthenticated)
                     {
                         mUser = new Player(result.AccountId, result.AccountId);
                         //afterSuccessFull authenticate
@@ -36,18 +37,8 @@ namespace CafeBazaar.Games
                             AuthAndStorageBridge.Instance.STORAGE_Init(
                                 (storage_result) =>
                                 {
-                                    if (storage_result.Status == InitStorageStatus.Success)
-                                    {
-                                        isAuthenticated = true;
-                                        if (callback != null)
-                                            callback(SignInStatus.Success);
-                                    }
-                                    else
-                                    {
-                                        isAuthenticated = false;
-                                        if (callback != null)
-                                            callback(SignInStatus.Failed);
-                                    }
+                                    if (callback != null)
+                                        callback(SignInStatus.Success);
                                 });
                         }
                         else
