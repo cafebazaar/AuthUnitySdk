@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using CafeBazaar;
 using UnityEngine.UI;
 using CafeBazaar.Games.BasicApi;
 using CafeBazaar.Games;
+using CafeBazaar.AuthAndStorage;
 
 public class LoginStorageExample : MonoBehaviour
 {
@@ -10,9 +11,9 @@ public class LoginStorageExample : MonoBehaviour
     [SerializeField] Text storageStatusText, consoleText;
     void Start()
     {
-        Log("CafeBazaar Plugin Version: " + PluginVersion.VersionString);
         RefreshButtonEnableStatus();
 
+        Log("CafeBazaar Plugin Version: " + AuthAndStorageBridge.Instance.GetVersion());
         var config = new BazaarGamesClientConfiguration.Builder().EnableSavedGames().Build();
         BazaarGamesPlatform.InitializeInstance(config);
         BazaarGamesPlatform.Activate();

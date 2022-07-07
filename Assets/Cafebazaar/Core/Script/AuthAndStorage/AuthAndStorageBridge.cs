@@ -72,6 +72,22 @@ namespace CafeBazaar.AuthAndStorage
         }
 
         #endregion
+
+        #region Get Version
+        public string GetVersion()
+        {
+            if (!Application.isEditor && Application.platform == RuntimePlatform.Android)
+            {
+#if UNITY_ANDROID
+                using (AndroidJavaClass pluginClass = new AndroidJavaClass("com.farsitel.bazaar.BazaarBridge"))
+                return pluginClass.CallStatic<string>("getVersion");
+#endif
+            }
+            return "Version not available.";
+        }
+
+        #endregion
+
         #region LOGIN System
         public bool IsSignIn { get; private set; }
         private string AccountId;
