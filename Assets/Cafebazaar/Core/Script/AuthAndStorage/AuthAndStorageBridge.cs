@@ -4,7 +4,6 @@ using UnityEngine;
 using CafeBazaar.Storage;
 using CafeBazaar.Core;
 using System;
-using System.Threading.Tasks;
 
 namespace CafeBazaar.AuthAndStorage
 {
@@ -393,24 +392,12 @@ namespace CafeBazaar.AuthAndStorage
                 Debug.LogError(CafeStorageInitError);
             }
         }
-        public async Task<string> Storage_GetKey(string Key, string defaultValue)
+        public string Storage_GetKey(string Key, string defaultValue)
         {
-            if (storageKeyValue.Count == 0)
-            {
-                var storageInitiateFinished = false;
-                StorageIsInit = false;
-                STORAGE_Init((result) => { storageInitiateFinished = true; });
-                while (!storageInitiateFinished)
-                {
-                    await Task.Delay(100);
-                }
-            }
-
             if (storageKeyValue.ContainsKey(Key))
-            {
                 return storageKeyValue[Key];
-            }
-            return defaultValue;
+            else
+                return defaultValue;
         }
         public bool Storage_HasKey(string Key)
         {
