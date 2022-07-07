@@ -1,5 +1,4 @@
-using UnityEngine;
-using CafeBazaar;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using CafeBazaar.Games.BasicApi;
 using CafeBazaar.Games;
@@ -69,10 +68,10 @@ public class LoginStorageExample : MonoBehaviour
         _GetKey();
     }
 
-    private async void _GetKey()
+    private void _GetKey()
     {
         var savedGameClient = BazaarGamesPlatform.Instance.SavedGame;
-        string data = await savedGameClient.GetString("Data1");
+        string data = savedGameClient.GetString("Data1");
         Log("Bazaar Storage > Data1 = " + data);
     }
 
