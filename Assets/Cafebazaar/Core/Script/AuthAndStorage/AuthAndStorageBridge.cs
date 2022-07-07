@@ -11,6 +11,7 @@ namespace CafeBazaar.AuthAndStorage
     public class AuthAndStorageBridge : MonoBehaviour
     {
         #region Singleton
+        private static bool DEBUG_MODE = true;
         private static AuthAndStorageBridge pointer;
         public static AuthAndStorageBridge Instance
         {
@@ -63,8 +64,10 @@ namespace CafeBazaar.AuthAndStorage
             if (!Application.isEditor)
             {
 #if UNITY_ANDROID
+                using (AndroidJavaClass pluginClass = new AndroidJavaClass("com.farsitel.bazaar.Logger"))
+                    pluginClass.SetStatic<bool>("DEBUG", DEBUG_MODE);
                 using (AndroidJavaClass pluginClass = new AndroidJavaClass("com.farsitel.bazaar.BazaarBridge"))
-                    bazaarBridgePlugin = pluginClass.CallStatic<AndroidJavaObject>("instance", true);
+                    bazaarBridgePlugin = pluginClass.CallStatic<AndroidJavaObject>("instance");
 #endif
             }
         }
@@ -209,10 +212,6 @@ namespace CafeBazaar.AuthAndStorage
         }
         public void OnGetDataSucceed(string data)
         {
-            if(data == "___no_data___"){
-                OnGetDataFailed("Storage has no data. \n Please login again.");
-                return;
-            }
             InitStorageResult initStorageResult = new InitStorageResult();
             initStorageResult.Status = InitStorageStatus.Success;
             Storage_LoadData(data);
