@@ -55,6 +55,14 @@ public class LoginStorageExample : MonoBehaviour
         });
     }
 
+    public void InitStorage()
+    {
+        BazaarGamesPlatform.Instance.InitStorage(response =>
+        {
+            Log("InitStorage " + response.ToString());
+        });
+    }
+
     public void SetKey()
     {
         var data = Random.Range(0, 1000).ToString();

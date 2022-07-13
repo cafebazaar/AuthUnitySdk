@@ -4,6 +4,7 @@ using UnityEngine.SocialPlatforms;
 using CafeBazaar.Games.BasicApi;
 using CafeBazaar.Games.Utilites;
 using CafeBazaar.Games.BasicApi.SavedGame;
+using CafeBazaar.Storage;
 
 namespace CafeBazaar.Games
 {
@@ -70,6 +71,16 @@ namespace CafeBazaar.Games
             });
         }
 
+        public void InitStorage(Action<InitStorageStatus> callback)
+        {
+            if (mClient == null)
+            {
+                Debug.Log("Creating Bazaar Games client.");
+                mClient = BazaarGamesClientFactory.GetPlatformBazaarGamesClient(mConfiguration);
+            }
+            mClient.InitStorage(callback);
+        }
+
         public void Authenticate(SignInInteractivity signInInteractivity, Action<SignInStatus> callback)
         {
             if (mClient == null)
@@ -88,10 +99,10 @@ namespace CafeBazaar.Games
                 case SignInInteractivity.NoPrompt:
                     mClient.Authenticate(true, code =>
                  {
-                        // SignInStatus.UiSignInRequired is returned when silent sign in fails or when there is no
-                        // internet connection.
-                        if (code == SignInStatus.UiSignInRequired &&
-                         Application.internetReachability == NetworkReachability.NotReachable)
+                     // SignInStatus.UiSignInRequired is returned when silent sign in fails or when there is no
+                     // internet connection.
+                     if (code == SignInStatus.UiSignInRequired &&
+                      Application.internetReachability == NetworkReachability.NotReachable)
                      {
                          callback(SignInStatus.NetworkError);
                      }
@@ -105,9 +116,9 @@ namespace CafeBazaar.Games
                 case SignInInteractivity.CanPromptAlways:
                     mClient.Authenticate(false, code =>
                   {
-                        // SignInStatus.Canceled is returned when interactive sign in fails or when there is no internet connection.
-                        if (code == SignInStatus.Canceled &&
-                          Application.internetReachability == NetworkReachability.NotReachable)
+                      // SignInStatus.Canceled is returned when interactive sign in fails or when there is no internet connection.
+                      if (code == SignInStatus.Canceled &&
+                        Application.internetReachability == NetworkReachability.NotReachable)
                       {
                           callback(SignInStatus.NetworkError);
                       }
@@ -130,8 +141,8 @@ namespace CafeBazaar.Games
                           return;
                       }
 
-                        // 2. Check the shared pref and bail out if it's true.
-                        if (!SignInHelper.ShouldPromptUiSignIn())
+                      // 2. Check the shared pref and bail out if it's true.
+                      if (!SignInHelper.ShouldPromptUiSignIn())
                       {
                           Debug.Log(
                               "User cancelled sign in attempt in the previous attempt. Triggering callback with silentSignInResultCode");
@@ -139,26 +150,26 @@ namespace CafeBazaar.Games
                           return;
                       }
 
-                        // 3. Check internet connection
-                        if (Application.internetReachability == NetworkReachability.NotReachable)
+                      // 3. Check internet connection
+                      if (Application.internetReachability == NetworkReachability.NotReachable)
                       {
                           Debug.Log("No internet connection");
                           callback(SignInStatus.NetworkError);
                           return;
                       }
 
-                        // 4. Interactive sign in
-                        mClient.Authenticate(false, interactiveSignInResultCode =>
-                      {
-                            // 5. Save that the user has cancelled the interactive sign in.
-                            if (interactiveSignInResultCode == SignInStatus.Canceled)
-                          {
-                              Debug.Log("Cancelled, saving this to a shared pref");
-                              SignInHelper.SetPromptUiSignIn(false);
-                          }
+                      // 4. Interactive sign in
+                      mClient.Authenticate(false, interactiveSignInResultCode =>
+                    {
+                        // 5. Save that the user has cancelled the interactive sign in.
+                        if (interactiveSignInResultCode == SignInStatus.Canceled)
+                        {
+                            Debug.Log("Cancelled, saving this to a shared pref");
+                            SignInHelper.SetPromptUiSignIn(false);
+                        }
 
-                          callback(interactiveSignInResultCode);
-                      });
+                        callback(interactiveSignInResultCode);
+                    });
                   });
                     break;
 

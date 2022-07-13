@@ -4,6 +4,7 @@ namespace CafeBazaar.Games.BasicApi
     using System;
     using CafeBazaar.Games.BasicApi.SavedGame;
     using CafeBazaar.Games.OurUtils;
+    using CafeBazaar.Storage;
 
     /// <summary>
     /// Dummy client used in Editor.
@@ -122,6 +123,11 @@ namespace CafeBazaar.Games.BasicApi
         private static void LogUsage()
         {
             Logger.d("Received method call on DummyClient - using stub implementation.");
+        }
+
+        public void InitStorage(Action<InitStorageStatus> callback)
+        {
+            Logger.d("InitStorage method call on DummyClient - using stub implementation.");
         }
     }
 }

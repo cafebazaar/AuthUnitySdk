@@ -35,13 +35,11 @@ namespace CafeBazaar.Games
                         if (mConfiguration.EnableSavedGames)
                         {
                             //Inital Storage
-                            AuthAndStorageBridge.Instance.STORAGE_Init(
-                                (storage_result) =>
-                                {
-                                    Debug.Log("Login Status " + result.Status + " Storage status: " + storage_result.Status);
-                                    if (callback != null)
-                                        callback(SignInStatus.Success);
-                                });
+                            InitStorage(storageResponse =>
+                            {
+                                if (callback != null)
+                                    callback(SignInStatus.Success);
+                            });
                         }
                         else
                         {
@@ -54,8 +52,18 @@ namespace CafeBazaar.Games
                         if (callback != null)
                             callback(SignInStatus.Failed);
                     }
-                }
-                );
+                });
+        }
+
+        public void InitStorage(Action<InitStorageStatus> callback)
+        {
+            AuthAndStorageBridge.Instance.STORAGE_Init(
+                (result) =>
+                {
+                    Debug.Log("Storage status: " + result.Status);
+                    if (callback != null)
+                        callback(result.Status);
+                });
         }
 
         public string GetUserDisplayName()
@@ -88,7 +96,5 @@ namespace CafeBazaar.Games
         {
             return mSavedGameClient;
         }
-
-
     }
 }
