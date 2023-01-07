@@ -145,6 +145,7 @@ namespace CafeBazaar.AuthAndStorage
         }
         #endregion
         #region STORAGE System
+        private readonly Dictionary<string, string> storageKeyValue = new Dictionary<string, string>();
         public bool StorageIsInit { get; private set; }
         public bool Storage_Is_Synced { get; private set; }
         public bool Storage_Is_Syncing { get; private set; }
@@ -190,6 +191,8 @@ namespace CafeBazaar.AuthAndStorage
                     if (Application.platform == RuntimePlatform.Android)
                     {
 #if UNITY_ANDROID
+                        SavedInitData(OnResult);
+
                         CallbackHolder.Instance.RegisterCallBack("OnGetDataSucceed", (x) => { OnResult((InitStorageResult)x); });
                         CallbackHolder.Instance.RegisterCallBack("OnGetDataFailed", (x) => { OnResult((InitStorageResult)x); });
 
@@ -265,6 +268,15 @@ namespace CafeBazaar.AuthAndStorage
             CallbackHolder.Instance.ExecuteCallBack("OnSaveDataFailed", setStorageResult);
         }
 
+        private void SavedInitData(Action<InitStorageResult> OnResult)
+        {
+            CallbackHolder.Instance.RegisterCallBack("OnSaveDataSucceed", (x) => { OnResult((InitStorageResult)x); });
+            CallbackHolder.Instance.RegisterCallBack("OnSaveDataFailed", (x) => { OnResult((InitStorageResult)x); });
+            storageKeyValue.Add("initCafeBazaar", "true");
+            string data = Storage_CalculateSaveData();
+            bazaarBridgePlugin.Call("SaveData", data);
+        }
+
         private IEnumerator IEOnLoginToCafebazaarSuccessfull(Action<SignInResult> OnResult, SignInResult loginResult)
         {
             yield return true;
@@ -275,7 +287,6 @@ namespace CafeBazaar.AuthAndStorage
                 OnResult(loginResult);
         }
 
-        private readonly Dictionary<string, string> storageKeyValue = new Dictionary<string, string>();
         private static bool init_storageLoop;
         private static float lastChangeStorage;
 
